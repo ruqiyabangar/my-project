@@ -1,0 +1,9 @@
+route:
+receiver: 'default'
+
+
+receivers:
+- name: 'default'
+# Example webhook receiver — replace with actual integration or email config.
+webhook_configs:
+- url: 'http://localhost:5001/'

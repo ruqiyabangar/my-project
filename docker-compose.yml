@@ -1,0 +1,37 @@
+version: '3.8'
+
+
+services:
+prometheus:
+image: prom/prometheus:latest
+volumes:
+- ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+- ./prometheus/alert_rules.yml:/etc/prometheus/alert_rules.yml:ro
+- /tmp:/tmp
+ports:
+- "9090:9090"
+command:
+- '--config.file=/etc/prometheus/prometheus.yml'
+
+
+alertmanager:
+image: prom/alertmanager:latest
+volumes:
+- ./alertmanager/config.yml:/etc/alertmanager/config.yml:ro
+ports:
+- "9093:9093"
+command:
+- '--config.file=/etc/alertmanager/config.yml'
+
+
+node-exporter:
+image: prom/node-exporter:latest
+command:
+- '--collector.textfile.directory=/tmp'
+volumes:
+- /proc:/host/proc:ro
+- /sys:/host/sys:ro
+- /:/rootfs:ro
+- /tmp:/tmp
+ports:
+- "9100:9100"

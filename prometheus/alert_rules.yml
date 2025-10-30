@@ -1,0 +1,11 @@
+groups:
+- name: service_down
+rules:
+- alert: ServiceDown
+expr: service_status == 0
+for: 2m
+labels:
+severity: critical
+annotations:
+summary: "Service {{ $labels.service }} is down"
+description: "{{ $labels.service }} is not active and could not be auto-restarted by the self-healing agent."
